@@ -47,36 +47,61 @@ class UsersController < ApplicationController
 
     head :no_content
   end
-	private
-	def user_params(params)
-	params.permit(:email, :password, :name, :blurb)
-	end
 
   def splatts
-	  @user = User.find(params[:id])
-
-	  render json: @user.splatts
+	@user = User.find(params[:id])
+	render json: @user.splatts
   end
 
-  def show_follows
+private
+  def user_params(params)
+    params.permit(:email, :password, :name, :blurb)
+  end
+
+
+def splatts_feed
+  @feed = Splatt.find_by_sql ("SELECT splatts.body, splatts.user_id, splatts.id, splatts.created_at FROM splatts JOIN follows ON follows.followed_id=splatts.user_id WHERE follows.follower_id=#{params[:id]} ORDER BY created_at DESC")
+
+  render json: @feed
+end
+
+
+def show_follows
    @user = User.find(params[:id])
+
 	render json: @user.follows
-  end
+end
 
-  def show_followers
+
+def show_followers
   @user = User.find(params[:id])
-	render json: @user.followed_by
-  end
 
-  def add_follows
+	render json: @user.followed_by
+end
+
+
+def add_follows
   @user = User.find(params[:id])
   @user = User.find(params[:follows_id])
-  end
+  
+  if @user.follows << @follows
+   head :no_content
+    else
+     render json: @user.errors, status: :unprocessable_entity
+    end
+end
 
-  def delete_follows
+
+def delete_follows
   @user = User.find(params[:id])
   @user = User.find (params[:follows_id])
+
+  if @user.follows.delete(@follows)
+   head :no_content
+  else
+   render json: @user.errors, status: unprocessable_entity
   end
+end
 
 
 
