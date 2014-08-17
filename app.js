@@ -5,7 +5,7 @@
 
 	app.controller('UserController', function() {
         // add your code below
-	
+            this.hello = "Hello, world.";
 
 
 
@@ -29,19 +29,19 @@
 
        var feed = [
          {
-	   id: 3
+	   id: 3,
            user_id: 2,
            body: "This is Bob's most recent splatt.",
 	   created_at: "2014-08-17T22:00:00Z"
 	 },
          {
-	   id: 2
+	   id: 2,
            user_id: 2,
            body: "This is Bob's second splatt.",
 	   created_at: "2014-08-16T13:25:00Z"
          },
          {
-	   id: 1
+	   id: 1,
            user_id: 2,
            body: "This is Bob's first splatt.",
 	   created_at: "2014-08-16T10:25:00Z"
