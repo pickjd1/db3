@@ -1,4 +1,4 @@
-(function() // We use this anonymous function to create a closure.
+(function() { // We use this anonymous function to create a closure.
 
 	var app = angular.module('splatter-web', []);
 
