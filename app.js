@@ -5,7 +5,6 @@
 
 	app.controller('UserController', function() {
         // add your code below
-            this.hello = "Hello, world.";
 
 
 
