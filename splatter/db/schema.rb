@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20140805225918) do
 
   create_table "follows", force: true do |t|
+    t.integer "follower_id"
     t.integer "followed_id"
   end
 
