@@ -1,5 +1,7 @@
 Splatter::Application.routes.draw do
   resources :splatts, except: [:new, :edit]
+  match 'users', to: 'users#index', via: [:options]
+  match 'users/:id', to: 'users#show', via: [:options]
   resources :users, except: [:new, :edit]
 
   get 'users/splatts/:id' => 'users#splatts'
