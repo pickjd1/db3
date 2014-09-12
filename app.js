@@ -4,26 +4,39 @@
 
 	app.factory('User', function($resource)
 	{
-		return $resource('http://localhost/api/users/:id.json', {id: '@id'},
-		{'update': {method:'PUT}} );
+		return $resource('http://pickworth.sqrawler.com/api/users/:id.json', {},
+		{
+		'update': {method:'PUT', url: 'http://pickworth.sqrawler.com/api/users/:id'}
+		'save': {method 'POST' , url: 'http://pickworth.sqrawler.com/api/users.json'}
+		} );
 	});
 
 
-	app.controller('UserController', function(User) {
+	app.controller('UserController', function(User)
+	{
         // add your user code below
 	this.data = {};
 	this.ulist = User.query();
-	this.getUser = function()
+	this.getUser = function(i)
 	{
-		return user.get({this.data.id});
+		return User.get({id: i});
 	};
 //	this.feed = feed;
 	// add your user code above	
+	this.login = function()
+	{
+		this.loggedin_user = this.getUser(this.data.id);
+		this.data = {};
+	};
+
 	});
 
+	app.controller('UserCreate', function(User)
+	{
+	this.data {};
 
         // add your form controller below
-	this.createUser = function()
+/*	this.createUser = function()
 	{
 		u = new User();
 		u.name = this.data.cname;
@@ -31,15 +44,25 @@
 		u.password = this.data.cpassword;
 		u.blurb = this.data.cblurb;
 		u.$save();
+		
 		this.data = {};
 	};
-
-	this.login = function()
+*/
+	this.createUser = function()
 	{
-		this.loggedin_user = this.getUser(this.data.id);
-		this.data = {};
+	user = new User(
+		{name: this.data.name,
+		email: this.data.email,
+		password: this.data.password,
+		blurb: this.data.blurb
+		});
+	user.save({user: user});
 	};
+	});
 
+
+	app.controller('UserDelete',function(User)
+	{
 	this.updateUser = function()
 	{
 		this.loggedin_user.name = this.data.name;
@@ -51,8 +74,11 @@
 
 	this.deleteUser = function()
 	{
-		User.delete({id: this.data.delid});
+		User.delete({id: this.user.id});
 	};
+
+	});
+
         // add your form controller above
 
 	// mock data
@@ -68,7 +94,7 @@
 	  name: "Bob Smith",
 	  email: "bob@smith.org"
 	};*/
-
+/*
 	app.controller("UpdateFormController", function() {
 		this.data = {};
 		this.updateUser = function(user) {
@@ -76,7 +102,7 @@
 			this.data = {}; //clears the form
 			}
 	});
-
+*/
 
 /*       var feed = [
          {
