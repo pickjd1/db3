@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="splatter-web">
+	<head>
+		<title>Basic Splatter Client</title>
+		<script src="angular.min.js"></script>
+		<script src="angular-resource.js"></script>
+		<script src="app.js"></script>
+	</head>
+	<body>
+		<div ng-controller="UserController as user">
+		<!-- Add your HTML and Angular code below -->
+		<form ng-submit="user.login()">
+			<p>User ID:</p>	<input type="text" ng-model="user.data.id" />
+			<input type="submit" value="Login" />
+		</form>
+
+		<p>User ID: {{user.loggedin_user.id}}</p>
+		<p>Name: {{user.loggedin_user.name}}</p>
+		<p>Email: {{user.loggedin_user.email}}</p>
+		<p>{{user.loggedin_user.blurb}}</p>
+		<div>
+			<form ng-submit="user.updateUser()">
+			<p>Name:</p>	<input type="text" ng-model="user.data.name" /><br />
+			<p>Email:</p>	<input type="text" ng-model="user.data.email" /> <br />
+			<p>Blurb:</p>	<textarea ng-model="user.data.blurb"></textarea> <br />
+				<input type="submit" value="Update" />
+			</form>
+		</div>
+		<div>
+			<form ng-submit="user.createUser()">
+			<p>Enter Name:</p>	<input type ="text" ng-model="user.data.cname" />{{user.u.cname}} <br />
+			<p>Enter Email:</p>	<input type ="text" ng-model="user.data.cemail" />{{user.u.cemail}} <br />
+			<p> Enter Password:</p>	<input type ="text" ng-model="user.data.cpassword" />{{user.u.cpassword}} <br />
+			<p>Enter Blurb:</p>	<textarea ng-model="user.data.cblurb"></textarea>{{user.u.cblurb}} <br />
+				<input type="submit" value ="Create" />
+			</form>
+		</div>
+		<div>
+			<form ng-submit="user.deleteUser()">
+				<select ng-model="user.data.delid">
+					<option ng-repeat="u in user.ulist">{{u.id}}</option>
+				</select>
+				<input type="submit" value="Delete" />
+			</form>
+		</div>
+		
+
+                <!-- Add your HTML and Angular code above
+
+		</div>
+	</body>
+</html>
+
