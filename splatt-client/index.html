@@ -1,53 +1,112 @@
 <!DOCTYPE html>
+<meta charset="UTF-8">
 <html ng-app="splatter-web">
 	<head>
-		<title>Basic Splatter Client</title>
+		<title>Splatter</title>
 		<script src="angular.min.js"></script>
 		<script src="angular-resource.js"></script>
 		<script src="app.js"></script>
+        <link rel="stylesheet" type="text/css" href="splatter.css">       
 	</head>
 	<body>
-		<div ng-controller="UserController as user">
-		<!-- Add your HTML and Angular code below -->
-		<form ng-submit="user.login()">
-			<p>User ID:</p>	<input type="text" ng-model="user.data.id" />
-			<input type="submit" value="Login" />
-		</form>
+	<div id ="boxLayout">
+	<div ng-controller="UserController as user">
 
-		<p>User ID: {{user.loggedin_user.id}}</p>
-		<p>Name: {{user.loggedin_user.name}}</p>
-		<p>Email: {{user.loggedin_user.email}}</p>
-		<p>{{user.loggedin_user.blurb}}</p>
-		<div>
-			<form ng-submit="user.updateUser()">
-			<p>Name:</p>	<input type="text" ng-model="user.data.name" /><br />
-			<p>Email:</p>	<input type="text" ng-model="user.data.email" /> <br />
-			<p>Blurb:</p>	<textarea ng-model="user.data.blurb"></textarea> <br />
-				<input type="submit" value="Update" />
-			</form>
-		</div>
-		<div>
-			<form ng-submit="user.createUser()">
-			<p>Enter Name:</p>	<input type ="text" ng-model="user.data.cname" />{{user.u.cname}} <br />
-			<p>Enter Email:</p>	<input type ="text" ng-model="user.data.cemail" />{{user.u.cemail}} <br />
-			<p> Enter Password:</p>	<input type ="text" ng-model="user.data.cpassword" />{{user.u.cpassword}} <br />
-			<p>Enter Blurb:</p>	<textarea ng-model="user.data.cblurb"></textarea>{{user.u.cblurb}} <br />
-				<input type="submit" value ="Create" />
-			</form>
-		</div>
-		<div>
-			<form ng-submit="user.deleteUser()">
-				<select ng-model="user.data.delid">
-					<option ng-repeat="u in user.ulist">{{u.id}}</option>
-				</select>
-				<input type="submit" value="Delete" />
-			</form>
+		<div id = "userInfo">
+			<p>Welcome {{user.u.name}}</p>
+			<p>Your Information:</p>
+			<p>{{user.u.email}}</p>
+			<p>{{user.u.blurb}}</p>
 		</div>
 		
-
-                <!-- Add your HTML and Angular code above
-
+			
+		<div id ="login">
+			<h3>Sign in</h3>			
+			<form ng-controller="UpdateFormController as form" ng-submit="form.updateUser(user)">
+				<input ng-model="form.data.name" type="text" placeholder="Enter your ID"/>
+				<input type="submit" value="Login"/>
+			</form>
 		</div>
+			
+			
+		<div id ="createUser">
+			<h3>Create User</h3>
+				<form ng-controller="createUserController as form" ng-submit="form.newUser(user)">
+					Name	<input ng-model="form.data.name" type="text" placeholder="Enter your name"/><br/>
+					Email	<input ng-model="form.data.email" type="text" placeholder="Enter an email address"/><br/>
+					Password	<input ng-model="form.data.password" type="text" placeholder="Enter a password"/><br/>
+					Blurb	<input ng-model="form.data.blurb" type="text" placeholder="Enter a blurb"/><br/>
+					<input type="submit" value="Create"/>
+				</form>
+		</div>	
+		
+		<div id ="updateDetails">
+				<h3>Update Your Details</h3>			
+				<form ng-controller="UpdateUserController as form" ng-submit="form.updateUser(user)">
+					New Name<input ng-model="form.data.name" type="text" placeholder="Your new name"/> </br>
+					New Blurb<input ng-model="form.data.blurb" type="text" placeholder="Your new password"/>
+					<input type="submit" value="Update"/>
+				</form>	
+		</div>	
+
+		
+		<div id ="userSplatts">	
+            	<h3>View Splatts</h3>			
+				<form ng-controller="ShowSplattsController as form" ng-submit="form.updateFeed(user)">
+					<input ng-model="form.data.id" type="text" placeholder="Enter a User ID" />
+					<input type="submit" value="Show"/>
+				</form>		
+		</div>
+
+		
+		<div id ="splattFeed">
+			<div ng-repeat="splatt in user.feed.splatt">
+            	<p> </p>
+                <h2>{{user.u.name}}</h2>
+				<p>{{splatt.body}}</p>
+				<p>{{splatt.created_at | date: 'dd/MM/yyyy h:mma'}}</p>
+			</div>
+		</div>
+		
+		
+		<div id ="deleteUser">
+				<h3>Delete User</h3>			
+				<form ng-controller="DeleteUserController as form" ng-submit="form.deleteUser(user)">
+					<select ng-model="form.data.id"/>
+					<option ng-repeat="u in user.ulist">{{u.id}}</option>
+					</select>
+					<input type="submit" value="Delete"/>
+				</form>
+		</div>
+
+		
+		<div id ="postSplatt">
+				<h3>Post Splatt</h3>			
+				<form ng-controller="AddSplattController as form" ng-submit="form.addSplatt(user)">
+					Splatt<input ng-model="form.data.splatt" type="text" placeholder="Splatt Here!"/>
+					<input type="submit" value="Post"/>
+				</form>
+		</div>	
+		
+				
+		<div id ="manageUsers">
+				<h3>Follow User</h3>
+				<form ng-controller="FollowUserController as form" ng-submit="form.followUser(user)">
+					Follow<input ng-model="form.data.follows" type="text" placeholder="User ID to follow"/><br/>
+
+					<input type="submit" value="Follow"/>
+				</form>
+				
+				<h3>Unfollow User</h3>
+				<form ng-controller="UnfollowUserController as form" ng-submit="form.unfollowUser(user)">
+					Follow<input ng-model="form.data.follows" type="text" placeholder="User ID to unfollow"/><br/>
+					<input type="submit" value="Unfollow"/>
+				</form>          
+		</div>
+
+	
+
+	</div>
+	</div>
 	</body>
 </html>
-

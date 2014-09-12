@@ -1,0 +1,43 @@
+body
+{
+	color: white;
+	margin-left: 50%;
+	width: 40%;
+	background-color: #FF3333;
+	background-image:url(splatter.png);
+	background-position: left;
+	background-size: 60%;
+	background-repeat: no-repeat;
+}
+
+h3
+{
+	color: white;
+}
+
+#boxLayout
+{
+	margin-left: 35%;
+}
+
+#splattFeed
+{
+	position: fixed;
+    top: 25%;
+    right: 5%;
+}
+
+#login
+{
+	position: fixed;
+    top: 15%;
+    right: 5%;
+}
+
+#userInfo
+{
+	position: fixed;
+    top: 1%;
+    right: 10%;
+}
+
