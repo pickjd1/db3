@@ -86,3 +86,6 @@ DEPENDENCIES
   rails (= 4.0.0)
   rails-api
   sqlite3
+
+gem 'mongoid', github: 'mongoid/mongoid'
+gem 'bson_ext'
