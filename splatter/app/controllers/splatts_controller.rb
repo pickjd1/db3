@@ -36,7 +36,32 @@ class SplattsController < ApplicationController
 
     head :no_content
   end
+
+def count
+    map = %Q{ function() {
+                var length = 0;
+                if(this.splatts) {
+        	   length = this.splatts.length;
+	        }
+	        emit ("count", length);
+	      }
+	    }
+    reduce  = %Q{ function(key, val) {
+  		    var data = 0;
+  		    val.forEach(function(v) {
+  		      data += v;
+		    });
+		    return data
+	  	  }
+	        }
+    @result = User.map_reduce(map, reduce).out(inline: true)
+  
+    render json: @result
 end
+
+end
+
+
 
 private
   def splatts_params(params)
