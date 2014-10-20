@@ -122,7 +122,7 @@ def splatts_feed
 		}
 	}
 
-  sort = %Q{
+  finalize  = %Q{
 	function(key, val) {
 		var myList = val.list;
 			if(myList) {
