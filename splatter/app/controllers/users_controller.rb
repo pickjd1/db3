@@ -7,18 +7,20 @@ class UsersController < ApplicationController
 
 
  def index
-    @users = User.all
+  db = UserRepository.new(Riak::Client.new) 
+   
+   @users = db.all
 
     render json: @users
   end
 
-  # GET /users/1
+   #GET /users/1
   # GET /users/1.json
   def show
     db = UserRepository.new(Riak::Client.new)
-    @user = db.find(params[:id])
+    @users = db.find(params[:id])
 
-    render json: @user
+    render json: @users
   end
 
   # POST /users
@@ -83,7 +85,7 @@ end
 
 def show_follows
    db = UserRepository.new(Riak::Client.new)
-   @user = db.find(params[:id]
+   @user = db.find(params[:id])
 
 	render json: @user.follows
 end
